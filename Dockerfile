@@ -9,7 +9,7 @@ RUN set -ex; \
 	true "Versioning"; \
 	if [ -n "$VERSION_INFO" ]; then echo "$VERSION_INFO" >> /.VERSION_INFO; fi; \
 	true "Cleanup"; \
-	rm -f /var/cache/apk/*; \
+	rm -f /var/cache/apk/*
 
 
 # Postfix
