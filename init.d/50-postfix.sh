@@ -51,7 +51,7 @@ fi
 mv /etc/supervisor/conf.d/postfix.conf.disabled /etc/supervisor/conf.d/postfix.conf
 
 # Remove old inet_protocols option
-sed -e '/^inet_protocols =/d' /etc/postfix/main.cf
+sed -e '/^inet_protocols =/d' -i /etc/postfix/main.cf
 
 echo "### START DOCKER CONFIG ###" >> /etc/postfix/main.cf
 echo "inet_protocols = all" >> /etc/postfix/main.cf
