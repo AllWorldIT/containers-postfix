@@ -51,6 +51,7 @@ fi
 mv /etc/supervisor/conf.d/postfix.conf.disabled /etc/supervisor/conf.d/postfix.conf
 
 echo "### START DOCKER CONFIG ###" >> /etc/postfix/main.cf
+echo "inet_protocols = all" >> /etc/postfix/main.cf
 echo "myhostname = $POSTFIX_MYHOSTNAME" >> /etc/postfix/main.cf
 echo "smtpd_banner = \$myhostname ESMTP" >> /etc/postfix/main.cf
 echo "mydestination = \$myhostname, $HOSTNAME$POSTFIX_DESTINATIONS, localhost.localdomain, localhost" >> /etc/postfix/main.cf
