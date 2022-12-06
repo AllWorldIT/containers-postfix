@@ -1,9 +1,6 @@
 # Introduction
 
-This is the AllWorldIT Alpine Linux base image for various other docker images.
-
-It comes bundled with Supervisord, Postfix and Cron.
-
+This is the AllWorldIT Postfix image.
 
 # Environment
 
@@ -38,33 +35,4 @@ In order to add lines to `/etc/postfix/master.cf`, use a multi-line environment 
 Relay domains can also be setup using a multi-line environment variable called `$POSTFIX_RELAY_DOMAINS`.
 
 Transport maps can be setup by using a multi-line environment variable called `$POSTFIX_TRANSPORT_MAPS`.
-
-
-# Script directories
-
-
-## Directory: /docker-entrypoint-pre-init-tests.d
-
-Any file with the .sh extension in this directory will be sourced in before initialization takes place during tests only.
-
-
-## Directory: /docker-entrypoint-pre-init.d
-
-Any file with the .sh extension in this directory will be sourced in before initialization takes place.
-
-
-## Directory: /docker-entrypoint-init.d
-
-Any file with the .sh extension in this directory will be sourced for initialization.
-
-
-## Directory: /docker-entrypoint-pre-exec.d
-
-Any file with the .sh extension in this directory will be sourced in after initialization, before startup.
-
-
-## Directory: /docker-entrypoint-tests.d
-
-Any file with the .sh extension in this directory will be sourced in during tests only.
-
 
