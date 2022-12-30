@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Short circuit if we're not running Postfix
 if [ -z "$START_POSTFIX" ]; then
