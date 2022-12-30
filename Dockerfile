@@ -17,20 +17,17 @@ COPY etc/supervisor/conf.d/postfix.conf.disabled /etc/supervisor/conf.d/postfix.
 COPY init.d/50-postfix.sh /docker-entrypoint-init.d/50-postfix.sh
 COPY pre-init-tests.d/50-postfix.sh /docker-entrypoint-pre-init-tests.d/50-postfix.sh
 COPY healthcheck.d/50-postfix.sh /docker-healthcheck.d/50-postfix.sh
-COPY tests.d/50-postfix.sh /docker-entrypoint-tests.d/50-postfix.sh
 RUN set -ex; \
 		chown root:root \
 			/etc/supervisor/conf.d/postfix.conf.disabled \
 			/docker-entrypoint-init.d/50-postfix.sh \
 			/docker-entrypoint-pre-init-tests.d/50-postfix.sh \
-			/docker-healthcheck.d/50-postfix.sh \
-			/docker-entrypoint-tests.d/50-postfix.sh; \
+			/docker-healthcheck.d/50-postfix.sh; \
 		chmod 0644 \
 			/etc/supervisor/conf.d/postfix.conf.disabled; \
 		chmod 0755 \
 			/docker-entrypoint-init.d/50-postfix.sh \
-			/docker-healthcheck.d/50-postfix.sh \
-			/docker-entrypoint-tests.d/50-postfix.sh
+			/docker-healthcheck.d/50-postfix.sh
 
 EXPOSE 25
 
