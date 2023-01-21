@@ -21,26 +21,26 @@
 
 
 # Short circuit if we're not running Postfix
-if [ -z "$POSTFIX_ROOT_ADDRESS" -o -z "$POSTFIX_MYHOSTNAME" -o -z "$POSTFIX_RELAYHOST" ]; then
-    return
+if [ -z "$POSTFIX_ROOT_ADDRESS" ] || [ -z "$POSTFIX_MYHOSTNAME" ] || [ -z "$POSTFIX_RELAYHOST" ]; then
+	return
 fi
 
 
 POSTFIX_TEST_RESULT_IPV4=$( echo "QUIT" | nc -w 5 127.0.0.1 25 2>&1 )
-if ! echo "$POSTFIX_TEST_RESULT_IPV4" | grep -qE '220 [0-9a-z\.]+ ESMTP'; then
-    echo -e "ERROR: Healthcheck failed for Postfix IPv4:\n$POSTFIX_TEST_RESULT_IPV4"
-    false
+if ! grep -qE '220 [0-9a-z\.]+ ESMTP' <<< "$POSTFIX_TEST_RESULT_IPV4"; then
+	fdc_error "Health check failed for Postfix using IPv4:\n$POSTFIX_TEST_RESULT_IPV4"
+	false
 fi
 
 
 # Return if we don't have IPv6 support
 if [ -z "$(ip -6 route show default)" ]; then
-    return
+	return
 fi
 
 
 POSTFIX_TEST_RESULT_IPV6=$( echo "QUIT" | nc -w 5 ::1 25 2>&1 )
-if ! echo "$POSTFIX_TEST_RESULT_IPV6" | grep -qE '220 [0-9a-z\.]+ ESMTP'; then
-    echo -e "ERROR: Healthcheck failed for Postfix IPv6:\n$POSTFIX_TEST_RESULT_IPV4"
-    false
+if ! grep -qE '220 [0-9a-z\.]+ ESMTP' <<< "$POSTFIX_TEST_RESULT_IPV6"; then
+	fdc_error "Health check failed for Postfix using IPv6:\n$POSTFIX_TEST_RESULT_IPV4"
+	false
 fi
