@@ -7,8 +7,6 @@
 This is the Conarx Containers Postfix image, it provides support for basic email redirection to RFC-standard accounts and relaying
 via a configurable host. Configuration can also be added for local mail delivery within the container.
 
-Postfix is only enabled when the all three of `POSTFIX_ROOT_ADDRESS`, `POSTFIX_MYHOSTNAME`, `POSTFIX_RELAYHOST` appear in the ENV.
-
 
 
 # Mirrors
@@ -20,15 +18,44 @@ Postfix is only enabled when the all three of `POSTFIX_ROOT_ADDRESS`, `POSTFIX_M
 
 
 
+# Conarx Containers
+
+All our Docker images are part of our Conarx Containers product line. Images are generally based on Alpine Linux and track the
+Alpine Linux major and minor version in the format of `vXX.YY`.
+
+Images built from source track both the Alpine Linux major and minor versions in addition to the main software component being
+built in the format of `vXX.YY-AA.BB`, where `AA.BB` is the main software component version.
+
+Our images are built using our Flexible Docker Containers framework which includes the below features...
+
+- Flexible container initialization and startup
+- Integrated unit testing
+- Advanced multi-service health checks
+- Native IPv6 support for all containers
+- Debugging options
+
+
+
+# Community Support
+
+Please use the project [Issue Tracker](https://gitlab.conarx.tech/containers/postfix/-/issues).
+
+
+
 # Commercial Support
 
-Commercial support is available from [Conarx](https://conarx.tech).
+Commercial support for all our Docker images is available from [Conarx](https://conarx.tech).
+
+We also provide consulting services to create and maintain Docker images to meet your exact needs.
 
 
 
 # Environment Variables
 
-If all required ENV's are set Postfix will be enabled.
+Additional environment variables are available from...
+* [Conarx Containers Alpine image](https://gitlab.conarx.tech/containers/alpine).
+
+Postfix is only enabled when the all three of `POSTFIX_ROOT_ADDRESS`, `POSTFIX_MYHOSTNAME`, `POSTFIX_RELAYHOST` appear in the ENV.
 
 
 ## POSTFIX_ROOT_ADDRESS (required)
@@ -113,3 +140,9 @@ echo 'rt unix - n n - - pipe flags=DORhu user=rt argv=/opt/rt5/bin/rt-mailgate -
 
 Additional configuration can be added to `/etc/postfix/master.cf` by using a multi-line environment variable called
 `POSTFIX_MASTER_CF`.
+
+
+
+# Exposed Ports
+
+Postfix port 25 is exposed.
