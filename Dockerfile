@@ -27,7 +27,7 @@ LABEL org.opencontainers.image.version   = "edge"
 LABEL org.opencontainers.image.base.name = "registry.conarx.tech/containers/alpine/edge"
 
 
-RUN set -ex; \
+RUN set -eux; \
 	true "Postfix"; \
 	apk add --no-cache postfix; \
 	true "Cleanup"; \
@@ -36,15 +36,18 @@ RUN set -ex; \
 
 # Postfix
 COPY etc/supervisor/conf.d/postfix.conf.disabled /etc/supervisor/conf.d/postfix.conf.disabled
-COPY usr/local/share/flexible-docker-containers/init.d/42-postfix.sh /usr/local/share/flexible-docker-containers/init.d/
-COPY usr/local/share/flexible-docker-containers/pre-init-tests.d/42-postfix.sh /usr/local/share/flexible-docker-containers/pre-init-tests.d/
-COPY usr/local/share/flexible-docker-containers/tests.d/42-postfix.sh /usr/local/share/flexible-docker-containers/tests.d/
-COPY usr/local/share/flexible-docker-containers/healthcheck.d/42-postfix.sh /usr/local/share/flexible-docker-containers/healthcheck.d/
-RUN set -ex; \
-		true "Flexible Docker Containers"; \
-		if [ -n "$VERSION_INFO" ]; then echo "$VERSION_INFO" >> /.VERSION_INFO; fi; \
-		true "Permissions"; \
-		fdc set-perms
+COPY usr/local/share/flexible-docker-containers/init.d/42-postfix.sh /usr/local/share/flexible-docker-containers/init.d
+COPY usr/local/share/flexible-docker-containers/pre-init-tests.d/42-postfix.sh /usr/local/share/flexible-docker-containers/pre-init-tests.d
+COPY usr/local/share/flexible-docker-containers/tests.d/42-postfix.sh /usr/local/share/flexible-docker-containers/tests.d
+COPY usr/local/share/flexible-docker-containers/healthcheck.d/42-postfix.sh /usr/local/share/flexible-docker-containers/healthcheck.d
+RUN set -eux; \
+	true "Flexible Docker Containers"; \
+	if [ -n "$VERSION_INFO" ]; then echo "$VERSION_INFO" >> /.VERSION_INFO; fi; \
+	true "Permissions"; \
+	fdc set-perms
+
+
+VOLUME /var/spool/postfix
 
 
 EXPOSE 25
