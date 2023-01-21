@@ -20,69 +20,69 @@
 # IN THE SOFTWARE.
 
 
-echo "TEST START (postfix): Check mail delivery using IPv4..."
+fdc_test_start postfix "Check mail delivery using IPv4..."
 POSTFIX_TEST_RESULT_SMTP_IPV4=$(
-    (
-        echo "HELO localhost"; sleep 0.5
-        echo "MAIL FROM: <root@localhost.localdomain>"; sleep 0.5
-        echo "RCPT TO: <root@localhost.localdomain>"; sleep 0.5
-        echo "DATA"; sleep 0.5
-        echo "PASSED_IPV4"; sleep 0.5
-        echo "."; sleep 0.5
-        echo "QUIT"
-    ) | nc -w 5 127.0.0.1 25 2>&1
+	(
+		echo "HELO localhost"; sleep 0.5
+		echo "MAIL FROM: <root@localhost.localdomain>"; sleep 0.5
+		echo "RCPT TO: <root@localhost.localdomain>"; sleep 0.5
+		echo "DATA"; sleep 0.5
+		echo "PASSED_IPV4"; sleep 0.5
+		echo "."; sleep 0.5
+		echo "QUIT"
+	) | nc -w 5 127.0.0.1 25 2>&1
 )
-if ! echo "$POSTFIX_TEST_RESULT_SMTP_IPV4" | grep -q '250 2\.0\.0 Ok: queued as'; then
-    echo "TEST FAILED (postfix): Postfix did not deliver the mail\n$POSTFIX_TEST_RESULT_SMTP_IPV4"
-    false
+if ! grep -q '250 2\.0\.0 Ok: queued as' <<< "$POSTFIX_TEST_RESULT_SMTP_IPV4"; then
+	fdc_test_fail postfix "Postfix did not deliver the mail\n$POSTFIX_TEST_RESULT_SMTP_IPV4"
+	false
 fi
-echo "TEST PROGRESS (postfix): Verifying mail delivery using IPv4"
+fdc_test_progress postfix "Verifying mail delivery using IPv4"
 for i in {60..0}; do
 	if grep -q PASSED_IPV4 /var/spool/mail/root; then
 		break
 	fi
-	echo "TEST PROGRESS (postfix): Waiting for mail to appear in the root mailbox... ${i}s"
+	fdc_test_progress postfix "Waiting for mail to appear in the root mailbox... ${i}s"
 	sleep 1
 done
 if [ "$i" = 0 ]; then
-	echo "TEST FAILED (postfix): Mail was not delivered to the root mailbox!"
+	fdc_test_fail postfix "Mail was not delivered to the root mailbox!"
 	false
 fi
-echo "TEST PASSED (postfix): Mail delivered to root mailbox using IPv4"
+fdc_test_pass postfix "Mail delivered to root mailbox using IPv4"
 
 
 # Return if we don't have IPv6 support
 if [ -z "$(ip -6 route show default)" ]; then
-    return
+	return
 fi
 
 
-echo "TEST START (postfix): Check mail delivery using IPv6..."
+fdc_test_start postfix "Check mail delivery using IPv6..."
 POSTFIX_TEST_RESULT_SMTP_IPV4=$(
-    (
-        echo "HELO localhost"; sleep 0.5
-        echo "MAIL FROM: <root@localhost.localdomain>"; sleep 0.5
-        echo "RCPT TO: <root@localhost.localdomain>"; sleep 0.5
-        echo "DATA"; sleep 0.5
-        echo "PASSED_IPV6"; sleep 0.5
-        echo "."; sleep 0.5
-        echo "QUIT"
-    ) | nc -w 5 ::1 25 2>&1
+	(
+		echo "HELO localhost"; sleep 0.5
+		echo "MAIL FROM: <root@localhost.localdomain>"; sleep 0.5
+		echo "RCPT TO: <root@localhost.localdomain>"; sleep 0.5
+		echo "DATA"; sleep 0.5
+		echo "PASSED_IPV6"; sleep 0.5
+		echo "."; sleep 0.5
+		echo "QUIT"
+	) | nc -w 5 ::1 25 2>&1
 )
-if ! echo "$POSTFIX_TEST_RESULT_SMTP_IPV4" | grep -q '250 2\.0\.0 Ok: queued as'; then
-    echo "TEST FAILED (postfix): Postfix did not deliver the mail\n$POSTFIX_TEST_RESULT_SMTP_IPV4"
-    false
+if ! grep -q '250 2\.0\.0 Ok: queued as' <<< "$POSTFIX_TEST_RESULT_SMTP_IPV4"; then
+	fdc_test_fail postfix "Postfix did not deliver the mail\n$POSTFIX_TEST_RESULT_SMTP_IPV4"
+	false
 fi
-echo "TEST PROGRESS (postfix): Verifying mail delivery using IPv6"
+fdc_test_progress postfix "Verifying mail delivery using IPv6"
 for i in {60..0}; do
 	if grep -q PASSED_IPV6 /var/spool/mail/root; then
 		break
 	fi
-	echo "TEST PROGRESS (postfix): Waiting for mail to appear in the root mailbox... ${i}s"
+	fdc_test_progress postfix "Waiting for mail to appear in the root mailbox... ${i}s"
 	sleep 1
 done
 if [ "$i" = 0 ]; then
-	echo "TEST FAILED (postfix): Mail was not delivered to the root mailbox!"
+	fdc_test_fail postfix "Mail was not delivered to the root mailbox!"
 	false
 fi
-echo "TEST PASSED (postfix): Mail delivered to root mailbox using IPv6"
+fdc_test_pass postfix "Mail delivered to root mailbox using IPv6"
