@@ -53,7 +53,7 @@ We also provide consulting services to create and maintain Docker images to meet
 # Environment Variables
 
 Additional environment variables are available from...
-* [Conarx Containers Alpine image](https://gitlab.conarx.tech/containers/alpine).
+* [Conarx Containers Alpine image](https://gitlab.conarx.tech/containers/alpine)
 
 Postfix is only enabled when the all three of `POSTFIX_ROOT_ADDRESS`, `POSTFIX_MYHOSTNAME`, `POSTFIX_RELAYHOST` appear in the ENV.
 
