@@ -53,6 +53,7 @@ fdc_test_pass postfix "Mail delivered to root mailbox using IPv4"
 
 # Return if we don't have IPv6 support
 if [ -z "$(ip -6 route show default)" ]; then
+	fdc_test_alert nginx-postfix "Not running IPv6 tests due to no IPv6 default route"
 	return
 fi
 
