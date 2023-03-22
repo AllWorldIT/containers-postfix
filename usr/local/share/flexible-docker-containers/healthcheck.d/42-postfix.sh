@@ -41,6 +41,6 @@ fi
 
 POSTFIX_TEST_RESULT_IPV6=$( echo "QUIT" | nc -w 5 ::1 25 2>&1 )
 if ! grep -qE '220 [0-9a-z\.-]+ ESMTP' <<< "$POSTFIX_TEST_RESULT_IPV6"; then
-	fdc_error "Health check failed for Postfix using IPv6:\n$POSTFIX_TEST_RESULT_IPV4"
+	fdc_error "Health check failed for Postfix using IPv6:\n$POSTFIX_TEST_RESULT_IPV6"
 	false
 fi
