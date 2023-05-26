@@ -57,7 +57,9 @@ if [ -n "$POSTFIX_DESTINATIONS" ]; then
 fi
 
 # Setup supervisord for postfix
-mv /etc/supervisor/conf.d/postfix.conf.disabled /etc/supervisor/conf.d/postfix.conf
+if [ -e /etc/supervisor/conf.d/postfix.conf.disabled ]; then
+	mv /etc/supervisor/conf.d/postfix.conf.disabled /etc/supervisor/conf.d/postfix.conf
+fi
 
 # Remove old inet_protocols option
 sed -e '/^inet_protocols =/d' -i /etc/postfix/main.cf
