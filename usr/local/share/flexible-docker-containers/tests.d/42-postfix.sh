@@ -23,6 +23,7 @@
 fdc_test_start postfix "Check mail delivery using IPv4..."
 POSTFIX_TEST_RESULT_SMTP_IPV4=$(
 	(
+		sleep 2
 		echo "HELO localhost"; sleep 0.5
 		echo "MAIL FROM: <root@localhost.localdomain>"; sleep 0.5
 		echo "RCPT TO: <root@localhost.localdomain>"; sleep 0.5
@@ -61,6 +62,7 @@ fi
 fdc_test_start postfix "Check mail delivery using IPv6..."
 POSTFIX_TEST_RESULT_SMTP_IPV4=$(
 	(
+		sleep 2
 		echo "HELO localhost"; sleep 0.5
 		echo "MAIL FROM: <root@localhost.localdomain>"; sleep 0.5
 		echo "RCPT TO: <root@localhost.localdomain>"; sleep 0.5
