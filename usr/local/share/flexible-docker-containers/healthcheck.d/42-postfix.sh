@@ -26,7 +26,7 @@ if [ -z "$POSTFIX_ROOT_ADDRESS" ] || [ -z "$POSTFIX_MYHOSTNAME" ] || [ -z "$POST
 fi
 
 
-POSTFIX_TEST_RESULT_IPV4=$( echo "QUIT" | nc -w 5 127.0.0.1 25 2>&1 )
+POSTFIX_TEST_RESULT_IPV4=$( (sleep 5; echo "QUIT") | nc -w 5 127.0.0.1 25 2>&1 )
 if ! grep -qE '220 [0-9a-z\.-]+ ESMTP' <<< "$POSTFIX_TEST_RESULT_IPV4"; then
 	fdc_error "Health check failed for Postfix using IPv4:\n$POSTFIX_TEST_RESULT_IPV4"
 	false
@@ -39,7 +39,7 @@ if [ -z "$(ip -6 route show default)" ]; then
 fi
 
 
-POSTFIX_TEST_RESULT_IPV6=$( echo "QUIT" | nc -w 5 ::1 25 2>&1 )
+POSTFIX_TEST_RESULT_IPV6=$( (sleep 5; echo "QUIT") | nc -w 5 ::1 25 2>&1 )
 if ! grep -qE '220 [0-9a-z\.-]+ ESMTP' <<< "$POSTFIX_TEST_RESULT_IPV6"; then
 	fdc_error "Health check failed for Postfix using IPv6:\n$POSTFIX_TEST_RESULT_IPV6"
 	false
